@@ -69,8 +69,30 @@ namespace StarChart.Controllers
             return Ok(celestialObjects);
         }
 
+        /// <summary>
+        /// Create Celestial Object
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /celestialobjects
+        ///     {
+        ///        "Id": 1,
+        ///        "Name": "Item1",
+        ///        "OrbitedObjectId": true,
+        ///        "Sattelites" : {
+        ///             none   
+        ///         },
+        ///        "OrbitalPeriod" : 12:00:00:00
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>   
         [HttpPost("/celestialobjects/")]
         [Consumes("application/json")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public IActionResult Create([FromBody]CelestialObject celestialObject)
         {
             _context.CelestialObjects.Add(celestialObject);
@@ -78,6 +100,9 @@ namespace StarChart.Controllers
             return CreatedAtRoute("GetById", new { id = celestialObject.Id }, celestialObject);
         }
 
+        /// <summary>
+        /// Edit Celestial Object
+        /// </summary>
         [HttpPut("/celestialobjects/{id}")]
         [Consumes("application/json")]
         public IActionResult Update(int id, CelestialObject celestialObject)
@@ -93,6 +118,9 @@ namespace StarChart.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Change name  of Celestial Object
+        /// </summary>
         [HttpPatch("/celestialobjects/{id}/{name}")]
         [Consumes("application/json")]
         public IActionResult RenameObject(int id, string name)
@@ -106,7 +134,14 @@ namespace StarChart.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Delete Celestial Object by prpviding id
+        /// </summary>
+        /// <response code="200">Deleted successfully</response>
+        /// <response code="404">Not found (wrong id)</response>   
         [HttpDelete("/celestialobjects/{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public IActionResult Delete(int id)
         {
             var celestialObjects = _context.CelestialObjects.Where(e => e.Id == id || e.OrbitedObjectId == id);
