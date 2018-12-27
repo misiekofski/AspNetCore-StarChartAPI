@@ -10,3 +10,11 @@ After that I've moved forward.
 - [x] Upgraded .net core to 2.2
 - [x] Fixed some tests to be more flexible with checking endpoints (now you can add custom endpoint)
 - [x] Added some json examples and documentation to code
+
+Future plans:
+- [ ] Dockerize service properly
+- [ ] Add db source instead of using memory (dockerized)
+- [ ] Set up CI/CD for Azure
+- [ ] Add more models and endpoints
+- [ ] Add authentication & secure Web API
+- [ ] Implement caching
