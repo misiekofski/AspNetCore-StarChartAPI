@@ -95,7 +95,7 @@ namespace StarChartTests
             Assert.True(method != null, "`CelestialObjectController` does not contain a `Update` action that accepts an `int` and a `CelestialObject` parameter.");
             Assert.True(method.ReturnType == typeof(IActionResult), "`CelestialObjectController`'s `Update` action was found, but does not have a return type of `IActionResult`.");
             var putAttribute = method.GetCustomAttributes(typeof(HttpPutAttribute), false).FirstOrDefault() as HttpPutAttribute;
-            Assert.True(putAttribute != null && putAttribute.Template == "{id}", "`CelestialObjectController`'s `Update` action was found, but does not have an `HttpPut` attribute with a template of `{id}`.");
+            Assert.True(putAttribute != null && putAttribute.Template.Contains("{id}"), "`CelestialObjectController`'s `Update` action was found, but does not have an `HttpPut` attribute with a template of `{id}`.");
             var notFoundResults = method.Invoke(celestialController, new object[] { 3, replacement }) as NotFoundResult;
             Assert.True(notFoundResults != null, "`CelestialObjectController`'s `Update` action did not return the `NotFound` when no `CelestialObject` with a matching `Id` was found.");
             var okResults = method.Invoke(celestialController, new object[] { 1, replacement }) as NoContentResult;
@@ -142,7 +142,7 @@ namespace StarChartTests
             Assert.True(method != null, "`CelestialObjectController` does not contain a `RenameObject` action that accepts an `int` and a `string` parameter.");
             Assert.True(method.ReturnType == typeof(IActionResult), "`CelestialObjectController`'s `RenameObject` action was found, but does not have a return type of `IActionResult`.");
             var patchAttribute = method.GetCustomAttributes(typeof(HttpPatchAttribute), false).FirstOrDefault() as HttpPatchAttribute;
-            Assert.True(patchAttribute != null && patchAttribute.Template == "{id}/{name}", "`CelestialObjectController`'s `RenameObject` action was found, but does not have an `HttpPatch` attribute with a template of `{id}/{name}`.");
+            Assert.True(patchAttribute != null && patchAttribute.Template.Contains("{id}/{name}"), "`CelestialObjectController`'s `RenameObject` action was found, but does not have an `HttpPatch` attribute with a template of `{id}/{name}`.");
             var notFoundResults = method.Invoke(celestialController, new object[] { 3, "Bob" }) as NotFoundResult;
             Assert.True(notFoundResults != null, "`CelestialObjectController`'s `RenameObject` action did not return the `NotFound` when no `CelestialObject` with a matching `Id` was found.");
             var okResults = method.Invoke(celestialController, new object[] { 1, "Sol" }) as NoContentResult;
@@ -189,7 +189,7 @@ namespace StarChartTests
             Assert.True(method != null, "`CelestialObjectController` does not contain a `Delete` action that accepts an `int` parameter.");
             Assert.True(method.ReturnType == typeof(IActionResult), "`CelestialObjectController`'s `Delete` action was found, but does not have a return type of `IActionResult`.");
             var deleteAttribute = method.GetCustomAttributes(typeof(HttpDeleteAttribute), false).FirstOrDefault() as HttpDeleteAttribute;
-            Assert.True(deleteAttribute != null && deleteAttribute.Template == "{id}", "`CelestialObjectController`'s `Delete` action was found, but does not have an `HttpDelete` attribute with a template of `{id}`.");
+            Assert.True(deleteAttribute != null && deleteAttribute.Template.Contains("{id}"), "`CelestialObjectController`'s `Delete` action was found, but does not have an `HttpDelete` attribute with a template of `{id}`.");
             var notFoundResults = method.Invoke(celestialController, new object[] { 3 }) as NotFoundResult;
             Assert.True(notFoundResults != null, "`CelestialObjectController`'s `Delete` action did not return the `NotFound` when no `CelestialObject` with a matching `Id` was found.");
             var okResults = method.Invoke(celestialController, new object[] { 1 }) as NoContentResult;

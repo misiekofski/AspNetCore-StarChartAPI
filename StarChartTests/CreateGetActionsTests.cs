@@ -50,7 +50,7 @@ namespace StarChartTests
             Assert.True(method != null, "`CelestialObjectController` does not contain a `GetById` action that accepts an `int` parameter.");
             Assert.True(method.ReturnType == typeof(IActionResult), "`CelestialObjectController`'s `GetById` action was found, but does not have a return type of `IActionResult`.");
             var getAttribute = method.GetCustomAttributes(typeof(HttpGetAttribute), false).FirstOrDefault() as HttpGetAttribute;
-            Assert.True(getAttribute != null && getAttribute.Template == "{id:int}", "`CelestialObjectController`'s `GetById` action was found, but does not have an `HttpGet` attribute with a template of `{id:int}`.");
+            Assert.True(getAttribute != null && getAttribute.Template.Contains("{id:int}"), "`CelestialObjectController`'s `GetById` action was found, but does not have an `HttpGet` attribute with a template of `{id:int}`.");
             var notFoundResults = method.Invoke(celestialController, new object[] { 3 }) as NotFoundResult;
             Assert.True(notFoundResults != null, "`CelestialObjectController`'s `GetById` action did not return the `NotFound` when no `CelestialObject` with a matching `Id` was found.");
             var okResults = method.Invoke(celestialController, new object[] { 1 }) as OkObjectResult;
@@ -98,7 +98,7 @@ namespace StarChartTests
             Assert.True(method != null, "`CelestialObjectController` does not contain a `GetByName` action that accepts a `string` parameter.");
             Assert.True(method.ReturnType == typeof(IActionResult), "`CelestialObjectController`'s `GetByName` action was found, but does not have a return type of `IActionResult`.");
             var getAttribute = method.GetCustomAttributes(typeof(HttpGetAttribute), false).FirstOrDefault() as HttpGetAttribute;
-            Assert.True(getAttribute != null && getAttribute.Template == "{name}", "`CelestialObjectController`'s `GetByName` action was found, but does not have an `HttpGet` attribute with a template of `{name}`.");
+            Assert.True(getAttribute != null && getAttribute.Template.Contains("{name}"), "`CelestialObjectController`'s `GetByName` action was found, but does not have an `HttpGet` attribute with a template of `{name}`.");
             var notFoundResults = method.Invoke(celestialController, new object[] { "Bob" }) as NotFoundResult;
             Assert.True(notFoundResults != null, "`CelestialObjectController`'s `GetByName` action did not return the `NotFound` when no `CelestialObject` with a matching `Name` was found.");
             var okResults = method.Invoke(celestialController, new object[] { "Sun" }) as OkObjectResult;
