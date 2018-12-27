@@ -8,6 +8,9 @@ using StarChart.Models;
 
 namespace StarChart.Controllers
 {
+    /// <summary>
+    /// Provides ability to store Celestial Objects.
+    /// </summary>
     [Route("")]
     [ApiController]
     public class CelestialObjectController : ControllerBase
@@ -18,7 +21,15 @@ namespace StarChart.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Returns Celestial Object by given id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Celestial Object returned</response>
+        /// <response code="404">Celestial Object not found</response>
         [HttpGet("/celestialobjects/{id:int}", Name = "GetById")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public IActionResult GetById(int id)
         {
             var celestialObject = _context.CelestialObjects.Find(id);
@@ -28,6 +39,9 @@ namespace StarChart.Controllers
             return Ok(celestialObject);
         }
 
+        /// <summary>
+        /// Returns Celestial Object by given name
+        /// </summary>
         [HttpGet("/celestialobjects/{name}")]
         public IActionResult GetByName(string name)
         {
@@ -41,6 +55,9 @@ namespace StarChart.Controllers
             return Ok(celestialObjects);
         }
 
+        /// <summary>
+        /// Returns all Celestial Objects
+        /// </summary>
         [HttpGet("/celestialobjects/")]
         public IActionResult GetAll()
         {
@@ -53,6 +70,7 @@ namespace StarChart.Controllers
         }
 
         [HttpPost("/celestialobjects/")]
+        [Consumes("application/json")]
         public IActionResult Create([FromBody]CelestialObject celestialObject)
         {
             _context.CelestialObjects.Add(celestialObject);
@@ -61,6 +79,7 @@ namespace StarChart.Controllers
         }
 
         [HttpPut("/celestialobjects/{id}")]
+        [Consumes("application/json")]
         public IActionResult Update(int id, CelestialObject celestialObject)
         {
             var existingObject = _context.CelestialObjects.Find(id);
@@ -75,6 +94,7 @@ namespace StarChart.Controllers
         }
 
         [HttpPatch("/celestialobjects/{id}/{name}")]
+        [Consumes("application/json")]
         public IActionResult RenameObject(int id, string name)
         {
             var existingObject = _context.CelestialObjects.Find(id);

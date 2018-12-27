@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,8 +24,26 @@ namespace StarChart
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "StarChart Api", Version = "v1" });
+                c.SwaggerDoc("v1", new Info
+                {
+                    Title = "StarChart Api",
+                    Version = "v1",
+                    Description = "API for adding, updating and removing celestial objects",
+                    TermsOfService = "None",
+                    Contact = new Contact
+                    {
+                        Name = "Michal Dobrzycki",
+                        Email = "dobrzycki+github@gmail.com",
+                        Url = "https://twitter.com/mdobrzycki"
+                    }
+                });
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,6 +54,7 @@ namespace StarChart
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "StarChart Api");
+                c.RoutePrefix = string.Empty;
             });
 
             app.UseMvc();
