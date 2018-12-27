@@ -18,7 +18,7 @@ namespace StarChart.Controllers
             _context = context;
         }
 
-        [HttpGet("{id:int}", Name = "GetById")]
+        [HttpGet("/celestialobjects/{id:int}", Name = "GetById")]
         public IActionResult GetById(int id)
         {
             var celestialObject = _context.CelestialObjects.Find(id);
@@ -28,7 +28,7 @@ namespace StarChart.Controllers
             return Ok(celestialObject);
         }
 
-        [HttpGet("{name}")]
+        [HttpGet("/celestialobjects/{name}")]
         public IActionResult GetByName(string name)
         {
             var celestialObjects = _context.CelestialObjects.Where(e => e.Name == name).ToList();
@@ -41,7 +41,7 @@ namespace StarChart.Controllers
             return Ok(celestialObjects);
         }
 
-        [HttpGet]
+        [HttpGet("/celestialobjects/")]
         public IActionResult GetAll()
         {
             var celestialObjects = _context.CelestialObjects.ToList();
@@ -52,7 +52,7 @@ namespace StarChart.Controllers
             return Ok(celestialObjects);
         }
 
-        [HttpPost]
+        [HttpPost("/celestialobjects/")]
         public IActionResult Create([FromBody]CelestialObject celestialObject)
         {
             _context.CelestialObjects.Add(celestialObject);
@@ -60,7 +60,7 @@ namespace StarChart.Controllers
             return CreatedAtRoute("GetById", new { id = celestialObject.Id }, celestialObject);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("/celestialobjects/{id}")]
         public IActionResult Update(int id, CelestialObject celestialObject)
         {
             var existingObject = _context.CelestialObjects.Find(id);
@@ -74,7 +74,7 @@ namespace StarChart.Controllers
             return NoContent();
         }
 
-        [HttpPatch("{id}/{name}")]
+        [HttpPatch("/celestialobjects/{id}/{name}")]
         public IActionResult RenameObject(int id, string name)
         {
             var existingObject = _context.CelestialObjects.Find(id);
@@ -86,7 +86,7 @@ namespace StarChart.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("/celestialobjects/{id}")]
         public IActionResult Delete(int id)
         {
             var celestialObjects = _context.CelestialObjects.Where(e => e.Id == id || e.OrbitedObjectId == id);
