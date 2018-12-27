@@ -141,7 +141,7 @@ namespace StarChart.Controllers
         /// <response code="404">Not found (wrong id)</response>   
         [HttpDelete("/celestialobjects/{id}")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(404 )]
         public IActionResult Delete(int id)
         {
             var celestialObjects = _context.CelestialObjects.Where(e => e.Id == id || e.OrbitedObjectId == id);
